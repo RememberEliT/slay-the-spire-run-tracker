@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+
+    <div class="card shadow-sm">
+      <div class="card-body">
+
+        <h2 class="mb-4">Run Details</h2>
+
+        <p><strong>Character:</strong> {{ run.character }}</p>
+        <p><strong>Floor Reached:</strong> {{ run.floor_reached }}</p>
+        <p><strong>Ascension Level:</strong> {{ run.ascension_level }}</p>
+
+        <p>
+          <strong>Date Played:</strong>
+          {{ run.date_played.strftime('%Y-%m-%d %H:%M') }}
+        </p>
+
+        <p>
+          <strong>Result:</strong>
+          {% if run.win %}
+            <span class="badge bg-success">Win</span>
+          {% else %}
+            <span class="badge bg-danger">Loss</span>
+          {% endif %}
+        </p>
+
+        <p>
+          <strong>Notes:</strong><br>
+          {{ run.notes or "No notes added." }}
+        </p>
+
+        <hr>
+
+        <div class="d-flex justify-content-between">
+          <a href="{{ url_for('list_runs') }}" class="btn btn-outline-secondary">
+            ← Back
+          </a>
+
+          <div>
+            <a href="{{ url_for('run_edit', run_id=run.id) }}" class="btn btn-outline-primary btn-sm">
+              Edit
+            </a>
+
+            <form action="{{ url_for('run_delete', run_id=run.id) }}" method="post" class="d-inline">
+              <button type="submit"
+                      class="btn btn-outline-danger btn-sm"
+                      onclick="return confirm('Delete this run?');">
+                Delete
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

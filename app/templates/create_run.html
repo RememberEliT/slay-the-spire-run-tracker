@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+
+        <h2 class="mb-4">Create Run</h2>
+
+        <form method="post">
+          {{ form.hidden_tag() }}
+
+          <div class="mb-3">
+            {{ form.character.label(class="form-label") }}
+            {{ form.character(class="form-select") }}
+          </div>
+
+          <div class="mb-3">
+            {{ form.floor_reached.label(class="form-label") }}
+            {{ form.floor_reached(class="form-control") }}
+          </div>
+
+          <div class="mb-3">
+            {{ form.ascension_level.label(class="form-label") }}
+            {{ form.ascension_level(class="form-control") }}
+          </div>
+
+          <div class="form-check mb-3">
+            {{ form.win(class="form-check-input") }}
+            {{ form.win.label(class="form-check-label") }}
+          </div>
+
+          <div class="mb-3">
+            {{ form.notes.label(class="form-label") }}
+            {{ form.notes(class="form-control", rows="4") }}
+          </div>
+
+          {{ form.submit(class="btn btn-primary w-100") }}
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

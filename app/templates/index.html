@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="text-center mt-5">
+    <h1 class="display-4 fw-bold">Slay the Spire Run Tracker</h1>
+    <p class="lead text-muted">
+        Track your runs and improve your decisions.
+    </p>
+
+    <div class="mt-4">
+        <a href="/create_run" class="btn btn-primary btn-lg me-2">
+            Add New Run
+        </a>
+        <a href="/runs" class="btn btn-outline-secondary btn-lg">
+            View Runs
+        </a>
+    </div>
+</div>
+
+<hr class="my-5">
+
+<div class="row text-center">
+    <div class="col-md-4">
+        <h5>📊 Track</h5>
+        <p class="text-muted">Log floors, ascension, and results.</p>
+    </div>
+    <div class="col-md-4">
+        <h5>🧠 Analyse</h5>
+        <p class="text-muted">Understand your run patterns.</p>
+    </div>
+    <div class="col-md-4">
+        <h5>⚔️ Improve</h5>
+        <p class="text-muted">Make better choices next time.</p>
+    </div>
+</div>
+
+{% endblock %}

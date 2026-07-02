@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="mb-4">All Runs</h1>
+
+<div class="table-responsive">
+  <table class="table table-striped table-hover align-middle">
+    <thead class="table-light">
+      <tr>
+        <th>Character</th>
+        <th>Floor</th>
+        <th>Ascension</th>
+        <th>Result</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for run in runs %}
+      <tr>
+        <td>{{ run.character }}</td>
+        <td>{{ run.floor_reached }}</td>
+        <td>{{ run.ascension_level }}</td>
+        <td>
+          {% if run.win %}
+            <span class="badge bg-success">Win</span>
+          {% else %}
+            <span class="badge bg-danger">Loss</span>
+          {% endif %}
+        </td>
+
+        <td>
+            <a href="{{ url_for('run_detail', run_id=run.id) }}" class="btn btn-sm btn-outline-primary">View</a>
+            <a href="{{ url_for('run_edit', run_id=run.id) }}" class="btn btn-sm btn-outline-secondary">Edit</a>
+
+            <form action="{{ url_for('run_delete', run_id=run.id) }}" method="post" class="d-inline">
+                <button type="submit" class="btn btn-sm btn-outline-danger">
+                    Delete
+                </button>
+            </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<a href="{{ url_for('index') }}" class="btn btn-link mt-3">← Back to Home</a>
+
+{% endblock %}
