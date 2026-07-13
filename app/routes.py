@@ -33,12 +33,6 @@ def create_run():
 
     return render_template("create_run.html", form=form)
 
-@app.route("/runs")
-@login_required
-def list_runs():
-    #gets all runs for the user
-    runs = Run.query.filter_by(user_id = current_user.id).all()
-    return render_template("list.html", runs=runs)
 
 @app.route("/run/<int:run_id>")
 @login_required
@@ -46,10 +40,66 @@ def run_detail(run_id):
     run = Run.query.get_or_404(run_id, user_id = current_user.id)
     return render_template("detail.html", run=run)
 
+@app.route("/runs")
+@login_required
+def list_runs():
+    character_filter = request.args.get("character")
+    result_filter = request.args.get("result")
+
+    query = Run.query.filter_by(user_id=current_user.id)
+
+    if character_filter:
+        query = query.filter_by(character=character_filter)
+
+    if result_filter == "win":
+        query = query.filter_by(win=True)
+    elif result_filter == "loss":
+        query = query.filter_by(win=False)
+
+    runs = query.all()
+
+    total_runs = len(runs)
+    wins = sum(1 for run in runs if run.win)
+    losses = total_runs - wins
+
+    win_rate = 0
+    best_floor = 0
+    average_floor = 0
+
+    if total_runs > 0:
+        win_rate = round((wins / total_runs) * 100, 1)
+        best_floor = max(run.floor_reached for run in runs)
+        average_floor = round(
+            sum(run.floor_reached for run in runs) / total_runs,
+            1
+        )
+
+    characters = [
+        ("ironclad", "Ironclad"),
+        ("silent", "Silent"),
+        ("defect", "Defect"),
+        ("regent", "Regent"),
+        ("necrobinder", "Necrobinder")
+    ]
+
+    return render_template(
+        "list.html",
+        runs=runs,
+        total_runs=total_runs,
+        wins=wins,
+        losses=losses,
+        win_rate=win_rate,
+        best_floor=best_floor,
+        average_floor=average_floor,
+        characters=characters,
+        selected_character=character_filter,
+        selected_result=result_filter
+    )
+
 @app.route("/runs/<int:run_id>/edit", methods=["GET", "POST"])
 @login_required
 def run_edit(run_id):
-    run = Run.query.get_or_404(run_id, user_id = current_user.id)
+    run = Run.query.get_or_404(run_id, user_id=current_user.id)
     form = RunForm(obj=run)
 
     if form.validate_on_submit():
@@ -63,6 +113,7 @@ def run_edit(run_id):
         return redirect(url_for('list_runs'))
 
     return render_template('create_run.html', form=form)
+
 
 @app.route("/runs/<int:run_id>/delete", methods=["POST"])
 @login_required

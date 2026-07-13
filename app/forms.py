@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, BooleanField, HiddenField, SubmitField, PasswordField
 from wtforms.fields.choices import SelectField
-from wtforms.validators import DataRequired, NumberRange, ValidationError, Email, EqualTo
+from wtforms.validators import DataRequired, NumberRange, ValidationError, Email, EqualTo, Optional
 
 from app.models import User
 from app import db
@@ -17,12 +17,43 @@ class RunForm(FlaskForm):
             ('regent', 'Regent'),
             ('necrobinder', 'Necrobinder')
         ],
-        coerce=str, validators=[DataRequired()]
+        coerce=str,
+        validators=[
+            DataRequired(message="Please choose a character.")
+        ]
     )
-    floor_reached = IntegerField('Floor reached',validators=[NumberRange(min=1, max=50),DataRequired()])
-    ascension_level = IntegerField('Ascension Level', validators=[NumberRange(min=0, max=10), DataRequired()])
+
+    floor_reached = IntegerField(
+        'Floor reached',
+        validators=[
+            DataRequired(message="Please enter the floor reached."),
+            NumberRange(
+                min=1,
+                max=57,
+                message="Floor reached must be between 1 and 57."
+            )
+        ]
+    )
+
+    ascension_level = IntegerField(
+        'Ascension Level',
+        validators=[
+            DataRequired(message="Please enter the ascension level."),
+            NumberRange(
+                min=0,
+                max=20,
+                message="Ascension level must be between 0 and 20."
+            )
+        ]
+    )
+
     win = BooleanField('Successful run?')
-    notes = StringField('notes')
+
+    notes = StringField(
+        'Notes',
+        validators=[Optional()]
+    )
+
     submit = SubmitField("Submit")
 
 
