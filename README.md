@@ -1,24 +1,27 @@
 # Slay the Spire Run Tracker
 
-A small Flask web application for tracking Slay the Spire runs.
+A Flask web application for tracking Slay the Spire runs, viewing basic run statistics, and filtering previous attempts by character and result.
 
-I built this project to practise developing a complete database-backed web app, including routes, forms, user authentication, CRUD functionality and relational data modelling.
+I built this project to practise developing a complete database-backed web app, including routes, forms, user authentication, CRUD functionality, validation, filtering and relational data modelling.
 
 ## Features
 
-- Add, view, edit and delete game runs
-- Track run details such as character, floor reached, ascension level, win status, date and notes
 - User registration and login
+- Add, view, edit and delete game runs
+- Track run details such as character, floor reached, ascension level, win status and notes
+- View summary statistics including total runs, wins, losses, win rate, best floor and average floor
+- Filter runs by character and result
+- Form validation for floor reached and ascension level
 - Database-backed records using SQLAlchemy
-- Form handling with WTForms
 - Bootstrap-based interface
 
 ## Tech Stack
 
 - Python
 - Flask
+- Flask-Login
+- Flask-WTF / WTForms
 - SQLAlchemy
-- WTForms
 - SQLite
 - HTML/CSS
 - Bootstrap
@@ -35,34 +38,29 @@ I built this project to practise developing a complete database-backed web app, 
 
 ### All Runs
 
-![All runs table](screenshots/all-runs.png)
+![All runs table with statistics and filters](screenshots/all-runs-updated.png)
 
 ## Why I Built It
 
-I wanted to build a small but complete web application around something I was interested in, rather than only working through isolated exercises. The project helped me practise taking an idea from a simple concept to a working application with database-backed records and user flows.
+I wanted to build a small but complete web application around something I was interested in, rather than only working through isolated exercises. The project helped me practise taking an idea from a simple concept to a working application with database-backed records, authentication, form handling and user flows.
 
 ## What I Practised
 
-- Flask routing and templates
-- CRUD operations
-- SQLAlchemy models and relationships
-- User authentication
-- Form validation
+- Structuring a Flask application
+- Building routes and templates
+- Creating SQLAlchemy models and relationships
+- Implementing CRUD operations
+- Handling user registration and login
+- Validating form input with WTForms
+- Filtering database queries using request parameters
+- Calculating summary statistics from stored records
 - Debugging across a full application flow
-- Structuring a small web app project
-
-## Planned Improvements
-
-- Add card and relic tracking using relational/junction tables
-- Add run statistics and filters
-- Improve dashboard views
-- Add tests for core routes and model logic
-- Improve UI styling and mobile responsiveness
+- Writing clearer project documentation
 
 ## Running Locally
 
 Clone the repository:
 
 ```bash
-git clone <repo-url>
-cd <repo-name>
+git clone https://github.com/RememberEliT/slay-the-spire-run-tracker.git
+cd slay-the-spire-run-tracker
